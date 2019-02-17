@@ -2,8 +2,6 @@ require("dotenv").config();
 var axios = require("axios");
 var moment = require("moment");
 var fs = require("fs");
-
-//For Spotify keys
 const env = process.env;
 
 var Spotify = require('node-spotify-api');
@@ -13,22 +11,18 @@ var spotify = new Spotify({
     secret: env.SPOTIFY_SECRET
 });
 
-
-//Input on CLI
 var query = process.argv;
 var type = process.argv[2];
 var array = [];
 
-//Loop through and join name of arguments after file name
 for (var i = 3; i < query.length; i++) {
     array.push(query[i]);
     array.push("+")
 }
 
-array.splice(-1); //Get rid of last plus sign, if left errors caused
-var finalSearch = array.join(""); //Search query joined together to form string for any query below
+array.splice(-1); 
+var finalSearch = array.join(""); 
 
-//Switch statement to determine type selected. (Ex. concert-this, movie-this, etc.)
 switch (type) {
     case 'concert-this':
         concertMe()
@@ -45,9 +39,6 @@ switch (type) {
     default:
         console.log("No type value found");
 }
-
-
-// node liri.js concert-this
 
 function concertMe() {
     if (finalSearch === "") {
@@ -68,16 +59,14 @@ function concertMe() {
     Event Date: ${moment(response.data[i].datetime).format('LL')}
             `
             console.log(currData)
+                }
             }
-           }
            
             dataLog(currData)
         }
     );
     }
 }
-
-// node liri.js spotify-this-song
 
 function spotifyIt() {
 
@@ -106,8 +95,6 @@ function spotifyIt() {
     });
 }
 
-// node liri.js movie-this
-
 function movieThis() {
 
     if (finalSearch === "") {
@@ -118,17 +105,17 @@ function movieThis() {
         function (response) {
         
             var currData = `\n
-    Title: ${response.data.Title}
-    Released: ${response.data.Year}
-    IMDB Rating: ${response.data.imdbRating}
-    Rotten Tomatos Rating: ${response.data.Ratings[1].Value}
-    Country: ${response.data.Country}
-    Language: ${response.data.Language}
-    Plot: ${response.data.Plot}
-    Actors: ${response.data.Actors}
+               Title: ${response.data.Title}
+               Released: ${response.data.Year}
+               IMDB Rating: ${response.data.imdbRating}
+               Rotten Tomatos Rating: ${response.data.Ratings[1].Value}
+               Country: ${response.data.Country}
+               Language: ${response.data.Language}
+               Plot: ${response.data.Plot}
+               Actors: ${response.data.Actors}
             `
-            console.log(currData)
-            dataLog(currData)
+                console.log(currData);
+                dataLog(currData);
         }
     );
 
